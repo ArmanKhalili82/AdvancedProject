@@ -1,6 +1,6 @@
 ﻿using AdvancedProject;
 
-var students = new List<Student<int>>();
+List<Student> students = new List<Student>();
 List<Teacher> teachers = new List<Teacher>();
 
 while (true)
@@ -19,30 +19,31 @@ while (true)
             var studentname = Console.ReadLine();
             Console.WriteLine("Enter Your Student Family:");
             var studentfamily = Console.ReadLine();
-            Console.WriteLine("Enter Your Number Of Student Scores:");
+            Console.WriteLine("Enter Your Student Score:");
             var studentscore = Convert.ToInt32(Console.ReadLine());
-            int[] scores = new int[studentscore];
-            int sum = 0;
+            //int[] scores = new int[studentscore];
+            //int sum = 0;
 
-            for(int c = 0; c < scores.Length; c++)
-            {
-                Console.WriteLine("Enter Your Score");
-                var score = Convert.ToInt32(Console.ReadLine());
-                scores[c] = score;
-                sum += score;
-            }
+            //for(int c = 0; c < scores.Length; c++)
+            //{
+            //    Console.WriteLine("Enter Your Score");
+            //    var score = Convert.ToInt32(Console.ReadLine());
+            //    scores[c] = score;
+            //    sum += score;
+            //}
 
-            var average = sum / scores.Length;
+            //var average = sum / scores.Length;
 
-            var st = students.Where(s => s.Name == studentname && s.Family == studentfamily && s.Score == average).FirstOrDefault();
+            var st = students.Where(s => s.Name == studentname && s.Family == studentfamily && s.Score == studentscore).FirstOrDefault();
 
             if (st == null)
             {
-                students.Add(new Student<int>() { Name = studentname, Family = studentfamily, Score = average });
-                foreach (var i in students)
-                {
-                    Console.WriteLine("Name:" + i.Name + "Family:" + i.Family + "Average Score:" + average);
-                }
+                students.Add(new Student() { Name = studentname, Family = studentfamily, Score = studentscore });
+                ////foreach (var i in students)
+                ////{
+                ////    Console.WriteLine("Name:" + i.Name + "Family:" + i.Family + "Average Score:" + average);
+                ////}
+                Console.WriteLine("Student Added!");
             }
         }
 
@@ -60,23 +61,35 @@ while (true)
             if (te == null)
             {
                 teachers.Add(new Teacher() { Name = teachername, Family = teacherfamily, Course = teacherlesson });
-                foreach (var i in teachers)
-                {
-                    Console.WriteLine("Name:" + i.Name + "Family:" + i.Family + "Course:" + i.Course);
-                }
+                //foreach (var i in teachers)
+                //{
+                //    Console.WriteLine("Name:" + i.Name + "Family:" + i.Family + "Course:" + i.Course);
+                //}
             }
         }
     }
 
+    else if (command == "GetScores")
+    {
+        var score = students.Sum(s => s.Score);
+        Console.WriteLine(score/students.Count);
+    }
+
     else if (command == "GetLesson")
     {
-        Console.WriteLine("Enter Course:");
-        var course = Console.ReadLine();
-        var getlesson = teachers.OrderBy(l => l.Course == course).ToList();
+        var getlesson = teachers.Distinct().ToList();
 
-        foreach (var i in getlesson)
+        if (getlesson != null)
         {
-            Console.WriteLine("Name:" + i.Name + "Family:" + i.Family + "Course:" + i.Course);
+            foreach (var l in getlesson)
+            {
+                Console.WriteLine(l.Course);
+            }
         }
+
+        //foreach (var i in getlesson)
+        //{
+        //    Console.WriteLine("Name:" + i.Name + "Family:" + i.Family + "Course:" + i.Course);
+        //}
     }
 }

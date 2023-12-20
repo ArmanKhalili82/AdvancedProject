@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdvancedProject;
 
-public class Student<T>: Person
+public class Student: Person
 {
     public int Score { get; set; }
 
