@@ -77,13 +77,13 @@ while (true)
 
     else if (command == "GetLesson")
     {
-        IEnumerable<IGrouping<string, Teacher>> getlesson = teachers.GroupBy(t => t.Course).Distinct();
+        var getlesson = teachers.GroupBy(s => s.Course);
 
         if (getlesson != null)
         {
-            foreach (IGrouping<string, Teacher> l in getlesson)
+            foreach (var group in getlesson)
             {
-                Console.WriteLine(l);
+                Console.WriteLine(group.Key);
             }
         }
 
